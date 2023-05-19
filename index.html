@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Recipe Suggestions</title>
+<!--  <script src="script.js"></script>-->
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<p id="recipe-suggestion"></p>
+
+<div id="recipe-container"></div>
+
+<script>
+  // Get the current time
+  var currentTime = new Date();
+
+  // Extract the hour from the current time
+  var currentHour = currentTime.toLocaleString('en-US', { hour: 'numeric', hour12: true });
+
+  // Define the breakfast, lunch, and dinner messages
+  var breakfastMessage = "You should cook ";
+  var lunchMessage = "You should cook ";
+  var dinnerMessage = "You should cook ";
+
+  // Get the suggestion container element
+  var suggestionContainer = document.getElementById("recipe-suggestion");
+
+  // Function to display the recipe suggestion
+  function displayRecipeSuggestion(suggestion) {
+    var suggestionHeading = document.createElement("h1");
+
+    // Create separate spans for each part of the suggestion text
+    var breakfastSpan = document.createElement("span");
+    breakfastSpan.textContent = "Breakfast";
+    breakfastSpan.classList.add("meal-color");
+
+    var lunchSpan = document.createElement("span");
+    lunchSpan.textContent = "Lunch";
+    lunchSpan.classList.add("meal-color");
+
+    var dinnerSpan = document.createElement("span");
+    dinnerSpan.textContent = "Dinner";
+    dinnerSpan.classList.add("meal-color");
+
+    // Create a span for the currentHour with the highlight class
+    var currentHourSpan = document.createElement("span");
+    currentHourSpan.textContent = currentHour;
+    currentHourSpan.classList.add("highlight");
+
+    // Append the spans to the suggestionHeading
+    if (currentHour < 12) {
+      suggestionHeading.appendChild(document.createTextNode(suggestion + " "));
+      suggestionHeading.appendChild(breakfastSpan);
+      suggestionHeading.appendChild(document.createTextNode(", "));
+    } else if (currentHour <18) {
+      suggestionHeading.appendChild(document.createTextNode(suggestion + " "));
+      suggestionHeading.appendChild(lunchSpan);
+      suggestionHeading.appendChild(document.createTextNode(", "));
+    } else {
+      suggestionHeading.appendChild(document.createTextNode(suggestion + " "));
+      suggestionHeading.appendChild(dinnerSpan);
+      suggestionHeading.appendChild(document.createTextNode(". It's "));
+    }
+
+
+
+
+    suggestionHeading.appendChild(currentHourSpan);
+
+    // Clear the suggestion container
+    suggestionContainer.innerHTML = "";
+    // Append the suggestionHeading to the suggestion container
+    suggestionContainer.appendChild(suggestionHeading);
+  }
+
+
+  // Define the breakfast recipe
+  var breakfastRecipe = {
+    name: "Breakfast Recipe",
+    instructions: [
+      "Prepare the ingredients for breakfast.",
+      "Cook the eggs.",
+      "Toast the bread.",
+      "Assemble the breakfast plate.",
+      "Enjoy your delicious breakfast!"
+    ]
+  };
+
+  // Define the lunch recipe
+  var lunchRecipe = {
+    name: "Lunch Recipe",
+    instructions: [
+      "Prepare the ingredients for lunch.",
+      "Cook the fish.",
+      "Prepare the cupcake.",
+      "Assemble the lunch plate.",
+      "Enjoy your delicious lunch!"
+    ]
+  };
+
+  // Define the dinner recipe
+  var dinnerRecipe = {
+    name: "Dinner Recipe",
+    instructions: [
+      "Prepare the ingredients for dinner. ",
+      "Cook the beef.",
+      "Prepare the ice cream.",
+      "Assemble the dinner plate.",
+      "Enjoy your delicious dinner!"
+    ]
+  };
+
+  // Function to display a recipe
+  function displayRecipe(recipe) {
+    var recipeContainer = document.getElementById("recipe-container");
+
+    // Create elements to display the recipe information
+    var recipeDiv = document.createElement("div");
+    var recipeName = document.createElement("h2");
+    var instructionsList = document.createElement("ol");
+
+    // Set the content of the recipe elements
+
+    recipeName.textContent = recipe.name;
+
+    // Create list items for the instructions
+    for (var i = 0; i < recipe.instructions.length; i++) {
+      var instruction = document.createElement("li");
+      instruction.textContent = recipe.instructions[i];
+      instructionsList.appendChild(instruction);
+    }
+
+    // Append recipe elements to the recipe div
+    recipeDiv.appendChild(recipeName);
+    recipeDiv.appendChild(instructionsList);
+
+    // Append the recipe div to the container
+    recipeContainer.appendChild(recipeDiv);
+  }
+
+  // Check the current hour and display the corresponding suggestion and recipe
+  if (currentHour < 12) {
+    displayRecipeSuggestion(breakfastMessage);
+
+  } else if (currentHour < 18) {
+    displayRecipeSuggestion(lunchMessage);
+
+  } else {
+    displayRecipeSuggestion(dinnerMessage);
+
+  }
+  displayRecipe(breakfastRecipe);
+  displayRecipe(lunchRecipe);
+  displayRecipe(dinnerRecipe);
+</script>
+</body>
+</html>
